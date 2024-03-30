@@ -1,0 +1,76 @@
+#pragma kernel CSMain
+
+RWStructuredBuffer<float> OscilloscopeMap;
+StructuredBuffer<float> samples;
+
+int samplesCount;
+int samplesStepCount;
+int baseSampleIndex;
+float timePassed;
+
+[numthreads(1, 1, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+    int sampleOffset = id.x;
+
+    int prevLeftSampleIndex = baseSampleIndex - sampleOffset * 2 - 2;
+    int prevRightSampleIndex = prevLeftSampleIndex + 1;
+    int leftSampleIndex = baseSampleIndex - sampleOffset * 2;
+    int rightSampleIndex = leftSampleIndex + 1;
+    
+    float prevTimeOffset = (float) (sampleOffset + 1) / (float) (samplesCount);
+    float timeOffset = 1.0f / (float) (samplesCount);
+    //float endTimeIntensity = (float) sampleOffset * dT;
+    //float beginTimeIntensity = 0.0f;
+    
+    float result = 0.0f;
+    
+    float prevLeftSample = samples[prevLeftSampleIndex];
+    float prevRightSample = samples[prevRightSampleIndex];
+    float leftSample = samples[leftSampleIndex];
+    float rightSample = samples[rightSampleIndex];
+        
+    float prevX = (1.0f + prevLeftSample) * 512.0f;
+    float prevY = (1.0f + prevRightSample) * 512.0f;
+    float x = (1.0f + leftSample) * 512.0f;
+    float y = (1.0f + rightSample) * 512.0f;
+    
+    float diffX = x - prevX;
+    float diffY = y - prevY;
+    float absDiffX = abs(diffX);
+    float absDiffY = abs(diffY);
+    float count = max(absDiffX, absDiffY);
+    float currentTimeOffset = prevTimeOffset;
+    timeOffset /= count;
+    //timeIntensity /= count;
+    
+    float currX = prevX;
+    float currY = prevY;
+    float deltaX;
+    float deltaY;
+    
+    deltaY = diffY / (float) ((int) count);
+    deltaX = diffX / (float) ((int) count);
+      
+    for (int i = 0; i < (int) count; ++i)
+    {
+        for (int dotY = max(0, (int) currY - 5); dotY <= min(1023, (int) currY + 5); ++dotY)
+        {
+            for (int dotX = max(0, (int) currX - 5); dotX <= min(1023, (int) currX + 5); ++dotX)
+            {
+                
+                float diff = min(1.0f, 0.2f * sqrt((dotY - currY) * (dotY - currY) + (dotX - currX) * (dotX - currX)));
+                diff *= diff;
+                float oldVal = OscilloscopeMap[dotY * 1024 + dotX];
+                float timeValue = max(0.0f, 0.1f - 0.1f*diff - currentTimeOffset);
+                OscilloscopeMap[dotY * 1024 + dotX] = min(oldVal + timeValue / count, 0.1f);
+        
+            }
+        }
+        currY += deltaY;
+        currX += deltaX;
+        currentTimeOffset -= timeOffset;
+    }
+        
+
+}

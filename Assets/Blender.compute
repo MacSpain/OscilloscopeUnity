@@ -1,0 +1,17 @@
+#pragma kernel CSMain
+ 
+RWTexture2D<float4> Result;
+Texture2D<float> ImageInput;
+ 
+float3 color;
+float timePassed;
+float thresholdValue;
+ 
+[numthreads(8, 8, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+    float r = ImageInput[float2(id.x, id.y)].r;
+
+    Result[id.xy] = min((timePassed) * Result[id.xy] + float4(color.r * r, color.g * r, color.b * r, 1.0), thresholdValue*float4(1.0f, 1.0f, 1.0f, 1.0f));
+ 
+}
