@@ -157,66 +157,66 @@ public class OscilliscopeTest : MonoBehaviour
         {
             processedEdges[i] = new ProcessedEdge();
         }
-        GenerateSamples(0);
+       // GenerateSamples(0);
 
     }
 
-    public void GenerateSamples(int newPosition)
-    {
-        int sampleIndex = 2*newPosition;
-        int samplesProcessed = 0;
-        int k = processedEdges[newPosition].outlineIndex;
-        int i = processedEdges[newPosition].edgeIndex;
-        int basePosition = processedEdges[newPosition].edgePosition;
-        float[][] positions = outlines[k].Positions;
-        int twoSpeed = 2*outlines[k].speed;
-        int length = samplesData.Length / 2;
-        float[] currPositions = positions[i];
+    //public void GenerateSamples(int newPosition)
+    //{
+    //    int sampleIndex = 2*newPosition;
+    //    int samplesProcessed = 0;
+    //    int k = processedEdges[newPosition].outlineIndex;
+    //    int i = processedEdges[newPosition].edgeIndex;
+    //    int basePosition = processedEdges[newPosition].edgePosition;
+    //    float[][] positions = outlines[k].Positions;
+    //    int twoSpeed = 2*outlines[k].speed;
+    //    int length = samplesData.Length / 2;
+    //    float[] currPositions = positions[i];
 
-        while (samplesProcessed < length)
-        {
-            for(int j = basePosition; j < twoSpeed; j += 2)
-            {
+    //    while (samplesProcessed < length)
+    //    {
+    //        for(int j = basePosition; j < twoSpeed; j += 2)
+    //        {
 
-                samplesData[sampleIndex] = currPositions[j + 0];
-                samplesData[sampleIndex + 1] = currPositions[j + 1];
-                int samplePos = sampleIndex / 2;
-                processedEdges[samplePos].outlineIndex = k;
-                processedEdges[samplePos].edgeIndex = i;
-                processedEdges[samplePos].edgePosition = j;
-                sampleIndex = (sampleIndex + 2) % samplesData.Length;
-                samplesProcessed += 2;
-                if(samplesProcessed >= length)
-                {
-                    break;
-                }
-            }
+    //            samplesData[sampleIndex] = currPositions[j + 0];
+    //            samplesData[sampleIndex + 1] = currPositions[j + 1];
+    //            int samplePos = sampleIndex / 2;
+    //            processedEdges[samplePos].outlineIndex = k;
+    //            processedEdges[samplePos].edgeIndex = i;
+    //            processedEdges[samplePos].edgePosition = j;
+    //            sampleIndex = (sampleIndex + 2) % samplesData.Length;
+    //            samplesProcessed += 2;
+    //            if(samplesProcessed >= length)
+    //            {
+    //                break;
+    //            }
+    //        }
 
-            if (samplesProcessed >= length)
-            {
-                break;
-            }
-            basePosition = 0;
-            i++;
-            if (i == positions.Length)
-            {
-                k = (k + 1) % outlines.Length;
-                positions = outlines[k].Positions;
-                twoSpeed = 2 * outlines[k].speed;
-                i = 0;
-            }
-            currPositions = positions[i];
+    //        if (samplesProcessed >= length)
+    //        {
+    //            break;
+    //        }
+    //        basePosition = 0;
+    //        i++;
+    //        if (i == positions.Length)
+    //        {
+    //            k = (k + 1) % outlines.Length;
+    //            positions = outlines[k].Positions;
+    //            twoSpeed = 2 * outlines[k].speed;
+    //            i = 0;
+    //        }
+    //        currPositions = positions[i];
 
-        }
+    //    }
 
-        generatedClip.SetData(samplesData, 0);
-    }
+    //    generatedClip.SetData(samplesData, 0);
+    //}
 
     void Update()
     {
         baseSampleIndex = 2 * source.timeSamples;
 
-        GenerateSamples(source.timeSamples);
+       // GenerateSamples(source.timeSamples);
         if (baseSampleIndex > 0)
         {
 

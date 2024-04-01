@@ -15,17 +15,10 @@ using System;
 
 public class Oscilliscope : MonoBehaviour
 {
-    [StructLayout(LayoutKind.Sequential)]
-    struct ExampleVertex
-    {
-        public float3 pos;
-        public float4 uv;
-    }
     [System.Serializable]
     public class ProcessedEdge
     {
         public int outlineIndex;
-        public int edgeIndex;
         public int edgePosition;
     }
 
@@ -47,8 +40,7 @@ public class Oscilliscope : MonoBehaviour
     private float[] samplesData;
     private int baseSampleIndex;
 
-
-    private ExampleVertex[] tempVerts;
+    private float3[] vertices;
     private Mesh mesh;
     private const float EPS = 0.000001f;
     private Material mat;
@@ -74,14 +66,15 @@ public class Oscilliscope : MonoBehaviour
 
             NativeArray<uint> indices = new NativeArray<uint>(triangleIndexCount, Allocator.Temp);
 
-            tempVerts = new ExampleVertex[verticesCount];
+            Vector4[] tempVerts = new Vector4[verticesCount];
+            vertices = new float3[verticesCount];
             float dT = 1.0f / ((float)192000);
             for (int i = 0; i < verticesCount / 4; ++i)
             {
-                tempVerts[i * 4 + 0].uv = new Vector4(0.0f, (i * dT), (-1.0f), (-1.0f));
-                tempVerts[i * 4 + 1].uv = new Vector4(0.0f, (i * dT), (-1.0f), (1.0f));
-                tempVerts[i * 4 + 2].uv = new Vector4(1.0f, (i * dT), (1.0f), (-1.0f));
-                tempVerts[i * 4 + 3].uv = new Vector4(1.0f, (i * dT), (1.0f), (1.0f));
+                tempVerts[i * 4 + 0] = new Vector4(0.0f, (i * dT), (-1.0f), (-1.0f));
+                tempVerts[i * 4 + 1] = new Vector4(0.0f, (i * dT), (-1.0f), (1.0f));
+                tempVerts[i * 4 + 2] = new Vector4(1.0f, (i * dT), (1.0f), (-1.0f));
+                tempVerts[i * 4 + 3] = new Vector4(1.0f, (i * dT), (1.0f), (1.0f));
 
                 if (i != (verticesCount / 4) - 1)
                 {
@@ -97,11 +90,11 @@ public class Oscilliscope : MonoBehaviour
 
             var layout = new[]
             {
-                new VertexAttributeDescriptor(VertexAttribute.Position, VertexAttributeFormat.Float32, 3),
-                new VertexAttributeDescriptor(VertexAttribute.TexCoord0, VertexAttributeFormat.Float32, 4),
+                new VertexAttributeDescriptor(VertexAttribute.Position, VertexAttributeFormat.Float32, 3, stream:0),
+                new VertexAttributeDescriptor(VertexAttribute.TexCoord0, VertexAttributeFormat.Float32, 4, stream:1),
             };
             mesh.SetVertexBufferParams(verticesCount, layout);
-            mesh.SetVertexBufferData(tempVerts, 0, 0, verticesCount);
+            mesh.SetVertexBufferData(tempVerts, 0, 0, verticesCount, 1);
             mesh.SetIndices(indices, MeshTopology.Triangles, 0);
             meshFilter.mesh = mesh;
             mesh.MarkDynamic();
@@ -121,23 +114,20 @@ public class Oscilliscope : MonoBehaviour
         int sampleIndex = 2*newPosition;
         int samplePos = newPosition;
         int k = processedEdges[newPosition].outlineIndex;
-        int i = processedEdges[newPosition].edgeIndex;
         int basePosition = processedEdges[newPosition].edgePosition;
-        float[][] positions = outlines[k].Positions;
-        int twoSpeed = 2*outlines[k].speed;
+        float[] positions = outlines[k].Positions[(int)outlines[k].CurrentNoteIndex];
+        int positionsCount = positions.Length;
         int length = samplesData.Length / 2;
         int samplesProcessed = length;
-        float[] currPositions = positions[i];
 
         while (samplesProcessed > 0)
         {
-            for (int j = basePosition; j < twoSpeed && samplesProcessed > 0; j += 2, samplesProcessed -= 2)
+            for (int j = basePosition; j < positionsCount && samplesProcessed > 0; j += 2, samplesProcessed -= 2)
             {
 
-                samplesData[sampleIndex] = currPositions[j];
-                samplesData[sampleIndex + 1] = currPositions[j + 1];
+                samplesData[sampleIndex] = positions[j];
+                samplesData[sampleIndex + 1] = positions[j + 1];
                 processedEdges[samplePos].outlineIndex = k;
-                processedEdges[samplePos].edgeIndex = i;
                 processedEdges[samplePos].edgePosition = j;
                 sampleIndex = (sampleIndex + 2) % samplesData.Length;
                 samplePos = (samplePos + 1) % length;
@@ -148,15 +138,9 @@ public class Oscilliscope : MonoBehaviour
                 break;
             }
             basePosition = 0;
-            i++;
-            if (i == positions.Length)
-            {
-                k = (k + 1) % outlines.Length;
-                positions = outlines[k].Positions;
-                twoSpeed = 2 * outlines[k].speed;
-                i = 0;
-            }
-            currPositions = positions[i];
+            k = (k + 1) % outlines.Length;
+            positions = outlines[k].Positions[(int)outlines[k].CurrentNoteIndex];
+            positionsCount = positions.Length;
 
         }
 
@@ -204,7 +188,6 @@ public class Oscilliscope : MonoBehaviour
                 diffX = x - prevX;
                 diffY = y - prevY;
                 float length = Mathf.Sqrt(diffX * diffX + diffY * diffY);
-
                 if (length > EPS)
                 {
                     diffX = diffX / length;
@@ -234,16 +217,16 @@ public class Oscilliscope : MonoBehaviour
                 tempVector.x = prevX - perpDiffX;
                 tempVector.y = prevY - perpDiffY;
                 tempVector.z = length;
-                tempVerts[vertexIndex + 0].pos = tempVector;
+                vertices[vertexIndex + 0] = tempVector;
                 tempVector.x += twoPerpDiffX;
                 tempVector.y += twoPerpDiffY;
-                tempVerts[vertexIndex + 1].pos = tempVector;
+                vertices[vertexIndex + 1] = tempVector;
                 tempVector.x = x - perpDiffX;
                 tempVector.y = y - perpDiffY;
-                tempVerts[vertexIndex + 2].pos = tempVector;
+                vertices[vertexIndex + 2] = tempVector;
                 tempVector.x += twoPerpDiffX;
                 tempVector.y += twoPerpDiffY;
-                tempVerts[vertexIndex + 3].pos = tempVector;
+                vertices[vertexIndex + 3] = tempVector;
 
                 vertexIndex -= 4;
 
@@ -252,7 +235,7 @@ public class Oscilliscope : MonoBehaviour
             }
 
             //mesh.SetVertices(vertices);
-            mesh.SetVertexBufferData(tempVerts, 0, 0, verticesCount, 0, MeshUpdateFlags.DontValidateIndices|MeshUpdateFlags.DontResetBoneBounds|MeshUpdateFlags.DontNotifyMeshUsers|MeshUpdateFlags.DontRecalculateBounds);
+            mesh.SetVertexBufferData(vertices, 0, 0, verticesCount, 0, MeshUpdateFlags.DontValidateIndices|MeshUpdateFlags.DontResetBoneBounds|MeshUpdateFlags.DontNotifyMeshUsers|MeshUpdateFlags.DontRecalculateBounds);
             //mesh.SetVertexBufferData<float3>(vertices, 0, 0, verticesCount);
             mat.SetFloat("_Size", size);
 
