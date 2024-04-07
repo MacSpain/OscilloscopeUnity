@@ -113,13 +113,6 @@ public class Graph
     {
         bool[] pairedVertices = new bool[oddVertices.Count];
         List<int>[,] potentialIntermediates = new List<int>[vertexCount, vertexCount];
-        for(int i = 0; i < oddVertices.Count; ++i)
-        {
-            for (int j = 0; j < oddVertices.Count; ++j)
-            {
-                potentialIntermediates[i, j] = new List<int>();
-            }
-        }
         for (int i = 0; i < oddVertices.Count; i++)
         {
             if (pairedVertices[i] == false)
@@ -170,7 +163,7 @@ public class Graph
             foreach (var edge in adjacencyList[currentVertex])
             {
                 int neighbor = edge.Item1;
-                if (distances.distances[currentVertex, neighbor] > 0)
+                if (distances.distances[currentVertex, neighbor] > 0 || intermediates[currentVertex, neighbor] != null)
                 {
                     if (intermediates[currentVertex, neighbor] != null && intermediates[currentVertex, neighbor].Count > 0)
                     {
@@ -181,8 +174,16 @@ public class Graph
                         }
                     }
                     stack.Push(neighbor);
-                    distances.distances[currentVertex, neighbor] = 0;
-                    distances.distances[neighbor, currentVertex] = 0;
+                    if (distances.distances[currentVertex, neighbor] > 0)
+                    {
+                        distances.distances[currentVertex, neighbor] = 0;
+                        distances.distances[neighbor, currentVertex] = 0;
+                    }
+                    else
+                    {
+                        intermediates[currentVertex, neighbor] = null;
+                        intermediates[neighbor, currentVertex] = null;
+                    }
                     found = true;
                     break;
                 }

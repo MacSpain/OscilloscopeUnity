@@ -11,6 +11,7 @@ public class Blender : MonoBehaviour
     private RenderTexture output;
     public MeshRenderer rend;
     public Color overlay;
+    [Range(0f, 1f)]
     public float afterGlow;
     public float threshold;
     private Material mat;
@@ -40,7 +41,7 @@ public class Blender : MonoBehaviour
         compute.SetTexture(kernel, "Result", output);
         compute.SetTexture(kernel, "ImageInput", input);
         compute.SetVector("color", overlay);
-        float timePassed = Mathf.Min(afterGlow*Time.deltaTime, 0.99f);
+        float timePassed = Mathf.Min(afterGlow*(1.0f - Time.deltaTime), 0.99f);
         compute.SetFloat("timePassed", timePassed);
         compute.SetFloat("thresholdValue", threshold);
         compute.Dispatch(kernel, input.width / 8, input.height / 8, 1);

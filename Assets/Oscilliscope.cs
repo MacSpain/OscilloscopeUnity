@@ -30,13 +30,14 @@ public class Oscilliscope : MonoBehaviour
     [SerializeField]
     private float intensity;
     [SerializeField]
-    private MeshOutline[] outlines;
+    private GameObject outlinesObject;
     [SerializeField]
     private Camera cam;
 
 
     public MeshFilter meshFilter;
 
+    private MeshOutline[] outlines;
     private float[] samplesData;
     private int baseSampleIndex;
 
@@ -46,10 +47,12 @@ public class Oscilliscope : MonoBehaviour
     private Material mat;
     private AudioClip generatedClip;
     private ProcessedEdge[] processedEdges;
+    private int CurrentBaseSampleIndex = (2 * 192000) - 2;
 
 
     void Start()
     {
+        outlines = outlinesObject.GetComponentsInChildren<MeshOutline>(true);
         generatedClip = AudioClip.Create("Oscilloscope", 192000, 2, 192000, false);
         samplesData = new float[2*192000];
         source.clip = generatedClip;
@@ -62,7 +65,7 @@ public class Oscilliscope : MonoBehaviour
             mat = rend.material;
             mesh = new Mesh();
             int verticesCount = 4 * (192000 - 1);
-            int triangleIndexCount = 6 * ((verticesCount / 4) - 1);
+            int triangleIndexCount = 6 * ((verticesCount / 4));
 
             NativeArray<uint> indices = new NativeArray<uint>(triangleIndexCount, Allocator.Temp);
 
@@ -76,15 +79,12 @@ public class Oscilliscope : MonoBehaviour
                 tempVerts[i * 4 + 2] = new Vector4(1.0f, (i * dT), (1.0f), (-1.0f));
                 tempVerts[i * 4 + 3] = new Vector4(1.0f, (i * dT), (1.0f), (1.0f));
 
-                if (i != (verticesCount / 4) - 1)
-                {
-                    indices[6 * i + 0] = (uint)(i * 2 + 0);
-                    indices[6 * i + 1] = (uint)(i * 2 + 3);
-                    indices[6 * i + 2] = (uint)(i * 2 + 1);
-                    indices[6 * i + 3] = (uint)(i * 2 + 0);
-                    indices[6 * i + 4] = (uint)(i * 2 + 2);
-                    indices[6 * i + 5] = (uint)(i * 2 + 3);
-                }
+                indices[6 * i + 0] = (uint)(i * 4 + 0);
+                indices[6 * i + 1] = (uint)(i * 4 + 3);
+                indices[6 * i + 2] = (uint)(i * 4 + 1);
+                indices[6 * i + 3] = (uint)(i * 4 + 0);
+                indices[6 * i + 4] = (uint)(i * 4 + 2);
+                indices[6 * i + 5] = (uint)(i * 4 + 3);
 
             }
 
@@ -113,24 +113,25 @@ public class Oscilliscope : MonoBehaviour
     {
         int sampleIndex = 2*newPosition;
         int samplePos = newPosition;
-        int k = processedEdges[newPosition].outlineIndex;
-        int basePosition = processedEdges[newPosition].edgePosition;
+        int k = processedEdges[samplePos].outlineIndex;
+        int basePosition = processedEdges[samplePos].edgePosition;
         float[] positions = outlines[k].Positions[(int)outlines[k].CurrentNoteIndex];
         int positionsCount = positions.Length;
-        int length = samplesData.Length / 2;
-        int samplesProcessed = length;
+        int samplesProcessed = samplesData.Length;
+        int samplesCount = samplesData.Length;
+        int length = processedEdges.Length;
 
         while (samplesProcessed > 0)
         {
             for (int j = basePosition; j < positionsCount && samplesProcessed > 0; j += 2, samplesProcessed -= 2)
             {
-
                 samplesData[sampleIndex] = positions[j];
                 samplesData[sampleIndex + 1] = positions[j + 1];
                 processedEdges[samplePos].outlineIndex = k;
                 processedEdges[samplePos].edgePosition = j;
-                sampleIndex = (sampleIndex + 2) % samplesData.Length;
+                sampleIndex = (sampleIndex + 2) % samplesCount;
                 samplePos = (samplePos + 1) % length;
+
             }
 
             if (samplesProcessed <= 0)
@@ -158,19 +159,16 @@ public class Oscilliscope : MonoBehaviour
 
             int verticesCount = 4 * (192000 - 1);
             float size = strokeWeight / 1000.0f;
-            int beginSample = baseSampleIndex - (2 * 192000 - 1);
-            int firstPartBeginSample = (beginSample < 0) ? 0 : beginSample;
-            int secondPartBeginSample = (beginSample < 0) ? (2 * 192000 + beginSample) : (2 * 192000);
-            int vertexIndex = 4*(19200 - 1) - 4;
+            int vertexIndex = 4 * (192000 - 2);
 
-            float x = 0.0f;
-            float y = 0.0f;
-            float prevX = 0.0f;
-            float prevY = 0.0f;
-            float diffX = 0.0f;
-            float diffY = 0.0f;
-            float perpDiffX = 0.0f;
-            float perpDiffY = 0.0f;
+            float x;
+            float y;
+            float prevX;
+            float prevY;
+            float diffX;
+            float diffY;
+            float perpDiffX;
+            float perpDiffY;
 
             x = samplesData[baseSampleIndex + 0];
             y = samplesData[baseSampleIndex + 1];
@@ -209,20 +207,15 @@ public class Oscilliscope : MonoBehaviour
                 float twoPerpDiffX = 2.0f * perpDiffX;
                 float twoPerpDiffY = 2.0f * perpDiffY;
 
-                prevX -= diffX;
-                prevY -= diffY;
-                x += diffX;
-                y += diffY;
-
-                tempVector.x = prevX - perpDiffX;
-                tempVector.y = prevY - perpDiffY;
+                tempVector.x = prevX - diffX - perpDiffX;
+                tempVector.y = prevY - diffY - perpDiffY;
                 tempVector.z = length;
                 vertices[vertexIndex + 0] = tempVector;
                 tempVector.x += twoPerpDiffX;
                 tempVector.y += twoPerpDiffY;
                 vertices[vertexIndex + 1] = tempVector;
-                tempVector.x = x - perpDiffX;
-                tempVector.y = y - perpDiffY;
+                tempVector.x = x + diffX - perpDiffX;
+                tempVector.y = y + diffY - perpDiffY;
                 vertices[vertexIndex + 2] = tempVector;
                 tempVector.x += twoPerpDiffX;
                 tempVector.y += twoPerpDiffY;
