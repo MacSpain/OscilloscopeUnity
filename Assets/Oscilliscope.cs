@@ -4,8 +4,11 @@ using Unity.Mathematics;
 
 using UnityEngine.Rendering;
 using static NoteSheetSO;
-using TMPro;
 
+///<summary>
+/// Class responsible for playback of music given by a note sheet and generating a mesh that resembles
+/// oscilloscope dot as it would be if left and right channel were to be connected into vertical and horizontal inputs on oscilloscope
+/// </summary>
 public class Oscilliscope : MonoBehaviour
 {
     [System.Serializable]
@@ -52,6 +55,7 @@ public class Oscilliscope : MonoBehaviour
 
     void Start()
     {
+        //Creating an audio clip for playback
         outlines = outlinesObject.GetComponentsInChildren<MeshOutline>(true);
         generatedClip = AudioClip.Create("Oscilloscope", frequency, 2, frequency, false);
         samplesData = new float[2* frequency];
@@ -60,6 +64,7 @@ public class Oscilliscope : MonoBehaviour
         source.Play();
         secondsElapsed = 0;
 
+        //Preparing mesh data for oscilloscope shader
         if (meshFilter != null)
         {
             MeshRenderer rend = meshFilter.gameObject.GetComponent<MeshRenderer>();
@@ -110,12 +115,17 @@ public class Oscilliscope : MonoBehaviour
 
     }
 
+    //A method that generates audio samples from an object referenced by "outlinesObject" field
+    //It processes given outlines from the object into path traversed by oscilloscope dot
+    //for it to then be processed as one mesh
     public void GenerateSamples(int newPosition)
     {
+        //Keeping track of seconds elapsed for FM synthesis purposes
         if(newPosition < oldPosition)
         {
             secondsElapsed++;
         }
+
         float secsElapsed = (float)secondsElapsed + (((float)newPosition) / (float)frequency);
         float dT = 1.0f / (float)frequency;
         oldPosition = newPosition;
@@ -124,6 +134,8 @@ public class Oscilliscope : MonoBehaviour
         int k = processedEdges[samplePos].outlineIndex;
         Notes.NoteSignature currentNote = Notes.NoteSignature.C0;
         float currentPatternBeat = 0;
+
+        //If a sheet is referenced then proceed through it's notes, otherwise note is set by each outline in the object.
         if (sheet != null)
         {
             currentNote = processedEdges[samplePos].note;
@@ -137,10 +149,11 @@ public class Oscilliscope : MonoBehaviour
         else
         {
             currentNote = outlines[k].CurrentNoteIndex;
-
         }
+
         int basePosition = processedEdges[samplePos].edgePosition;
 
+        //Update position data of edges
         outlines[k].ComputeNewPositions(currentNote);
 
         float[] positions = outlines[k].Positions[(int)currentNote];
@@ -149,6 +162,7 @@ public class Oscilliscope : MonoBehaviour
         int samplesCount = samplesData.Length;
         int length = processedEdges.Length;
 
+        //Proceed with updating positions, and note synthesis until all needed samples are processed
         while (samplesProcessed > 0)
         {
             for (int j = basePosition; j < positionsCount && samplesProcessed > 0; j += 2, samplesProcessed -= 2)
@@ -200,6 +214,7 @@ public class Oscilliscope : MonoBehaviour
 
         }
 
+        //set generated audio samples for the clip
         generatedClip.SetData(samplesData, 0);
     }
 
@@ -208,6 +223,7 @@ public class Oscilliscope : MonoBehaviour
         baseSampleIndex = 2 * source.timeSamples;
         int oldPos = oldPosition;
         GenerateSamples(source.timeSamples);
+        //Reading sample data and processing it into vertex buffers for it to be rendered
         if (baseSampleIndex > 0)
         {
 
