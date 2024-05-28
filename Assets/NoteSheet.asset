@@ -1,0 +1,1048 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d8a8e52111cf004487b6f4d74dc6170, type: 3}
+  m_Name: NoteSheet
+  m_EditorClassIdentifier: 
+  BPM: 2720
+  activeTicks:
+  - events:
+    - active: 1
+      note: 40
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 26
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 27
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 1
+      note: 35
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 29
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 1
+      note: 36
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 1
+      note: 38
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 1
+      note: 40
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 1
+      note: 36
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 1
+      note: 35
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+  - events:
+    - active: 1
+      note: 33
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 1
+      note: 33
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 1
+      note: 36
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 1
+      note: 40
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 1
+      note: 38
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 1
+      note: 36
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+  - events:
+    - active: 1
+      note: 35
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 1
+      note: 35
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 1
+      note: 36
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 1
+      note: 38
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 1
+      note: 40
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 27
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+  - events:
+    - active: 1
+      note: 36
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 1
+      note: 33
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 27
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 1
+      note: 33
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 28
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 27
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+  - events:
+    - active: 0
+      note: 25
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 1
+      note: 38
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 25
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 1
+      note: 41
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 1
+      note: 45
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 1
+      note: 43
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 1
+      note: 41
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+  - events:
+    - active: 0
+      note: 25
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 1
+      note: 40
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 25
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 1
+      note: 36
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 1
+      note: 40
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 1
+      note: 38
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 1
+      note: 36
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+  - events:
+    - active: 1
+      note: 35
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 1
+      note: 35
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 1
+      note: 36
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 1
+      note: 38
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 1
+      note: 40
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 27
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+  - events:
+    - active: 1
+      note: 36
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 1
+      note: 33
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 27
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 1
+      note: 33
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 28
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 27
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
+    - active: 0
+      note: 0
